@@ -7,6 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Слайдер</title>
   <link rel="stylesheet" href="css/styles.css">
+
 </head>
 <body>
   <section class="product-item">
@@ -31,5 +32,20 @@
       </div>
     </div>
   </section>
+
+  <script>
+      const photos = ['airmax-jump.png', 'airmax-on-foot.png', 'airmax-playground.png', 'airmax-top-view.png', 'airmax.png'];
+      const img = document.getElementById('slider');
+
+      let photoNum = 0;
+      setInterval(() => {
+          img.src = `./i/${photos[photoNum]}`;
+          if(photoNum + 1 === photos.length) {
+              photoNum = 0;
+          } else {
+              photoNum++;
+          }
+      },5000)
+  </script>
 </body>
 </html>
