@@ -38,14 +38,21 @@
       const img = document.getElementById('slider');
 
       let photoNum = 0;
+      setCurrentImageSrc();
+
       setInterval(() => {
-          img.src = `./i/${photos[photoNum]}`;
           if(photoNum + 1 === photos.length) {
               photoNum = 0;
           } else {
               photoNum++;
           }
-      },5000)
+
+          setCurrentImageSrc();
+      },5000);
+
+      function setCurrentImageSrc() {
+          img.src = `./i/${photos[photoNum]}`;
+      }
   </script>
 </body>
 </html>
