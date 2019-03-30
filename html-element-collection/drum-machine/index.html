@@ -34,5 +34,17 @@
   		<audio src="wav/ride.wav" />
   	</li>
   </ul>
+
+  <script>
+	  function playDrumSound(e) {
+	      e.target.getElementsByTagName('audio')[0].play();
+	  }
+
+	  const drumKitButtons = document.getElementsByClassName('drum-kit__drum');
+
+	  for(button of drumKitButtons) {
+	      button.addEventListener('click',playDrumSound);
+	  }
+  </script>
 </body>
 </html>

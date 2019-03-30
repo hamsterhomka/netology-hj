@@ -15,5 +15,15 @@
       <li><a href="#">Выйти</a></li>
     </ul>
   </div>
+
+  <script>
+    const dropdown = document.getElementsByClassName('wrapper-dropdown')[0];
+
+    function toggleDropdown() {
+        dropdown.classList.toggle('active');
+    }
+
+    dropdown.addEventListener('click',toggleDropdown);
+  </script>
 </body>
 </html>

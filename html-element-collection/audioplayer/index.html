@@ -38,5 +38,75 @@
   		</div>
   	</div>
   </div>
+
+  <script>
+	  const trackList = ['LA Chill Tour', 'LA Fusion Jam', 'This is it band'];
+	  const playerBlock = document.getElementsByClassName('mediaplayer')[0];
+	  const player = playerBlock.getElementsByTagName('audio')[0];
+      const title = playerBlock.getElementsByClassName('title')[0];
+	  const playStateBtn = playerBlock.getElementsByClassName('playstate')[0];
+	  const stopBtn = playerBlock.getElementsByClassName('stop')[0];
+	  const nextBtn = playerBlock.getElementsByClassName('next')[0];
+	  const backBtn = playerBlock.getElementsByClassName('back')[0];
+
+	  let currentTrackNum = 0;
+	  setTrackSrc(trackList[currentTrackNum]);
+
+	  playStateBtn.addEventListener('click',togglePlay);
+	  stopBtn.addEventListener('click',stop);
+	  nextBtn.addEventListener('click',playNext);
+	  backBtn.addEventListener('click',playPrev);
+
+	  function togglePlay() {
+	      if(!playerBlock.classList.contains('play')) {
+	          play();
+		  } else {
+              pause();
+		  }
+	  }
+
+	  function play() {
+          playerBlock.classList.add('play');
+          player.play();
+	  }
+
+	  function pause() {
+          playerBlock.classList.remove('play');
+          player.pause();
+	  }
+
+	  function stop() {
+	      pause();
+          player.currentTime = 0;
+	  }
+
+	  function setTrackSrc(name) {
+	      player.src = `./mp3/${name}.mp3`;
+	  }
+
+      function playNext() {
+          if(currentTrackNum + 1 !== trackList.length) {
+              currentTrackNum++;
+          } else {
+              currentTrackNum = 0;
+          }
+          changeTrack();
+      }
+
+      function playPrev() {
+          if(currentTrackNum === 0) {
+              currentTrackNum = trackList.length - 1;
+          } else {
+              currentTrackNum--;
+          }
+          changeTrack();
+      }
+
+      function changeTrack() {
+	      pause();
+          setTrackSrc(trackList[currentTrackNum]);
+          title.title = trackList[currentTrackNum];
+	  }
+  </script>
 </body>
 </html>
