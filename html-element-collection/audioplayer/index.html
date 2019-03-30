@@ -1,112 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Задача 3. Аудиоплеер | Домашнее задание к лекции 1.2</title>
-  <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Задача 3. Аудиоплеер | Домашнее задание к лекции 1.2</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <div class="mediaplayer">
-  	<audio src="https://d34x6xks9kc6p2.cloudfront.net/540997b0-a35f-4b69-86d6-b1c925c4a264/540997b0-a35f-4b69-86d6-b1c925c4a264.mp3"></audio>
-  	<div class="discarea">
-  		<div class="disc">
-  		</div>
-  		<div class="stylus">
-  			<div class="pivot"></div>
-  			<div class="arm"></div>
-  			<div class="head"></div>
-  		</div>
-  	</div>
-  	<div class="controls">
-  		<span class="title" title="LA Chill Tour"></span>
-  		<div class="buttons">
-  			<button class="back">
-  				<i class="fa fa-backward"></i>
-  			</button>
-  			<button class="playstate">
-  				<i class="fa fa-play"></i>
-  				<i class="fa fa-pause"></i>
-  			</button>
-  			<button class="stop">
-  				<i class="fa fa-stop"></i>
-  			</button>
-  			<button class="next">
-  				<i class="fa fa-forward"></i>
-  			</button>
-  		</div>
-  	</div>
-  </div>
+<div class="mediaplayer">
+    <audio src="https://d34x6xks9kc6p2.cloudfront.net/540997b0-a35f-4b69-86d6-b1c925c4a264/540997b0-a35f-4b69-86d6-b1c925c4a264.mp3"></audio>
+    <div class="discarea">
+        <div class="disc">
+        </div>
+        <div class="stylus">
+            <div class="pivot"></div>
+            <div class="arm"></div>
+            <div class="head"></div>
+        </div>
+    </div>
+    <div class="controls">
+        <span class="title" title="LA Chill Tour"></span>
+        <div class="buttons">
+            <button class="back">
+                <i class="fa fa-backward"></i>
+            </button>
+            <button class="playstate">
+                <i class="fa fa-play"></i>
+                <i class="fa fa-pause"></i>
+            </button>
+            <button class="stop">
+                <i class="fa fa-stop"></i>
+            </button>
+            <button class="next">
+                <i class="fa fa-forward"></i>
+            </button>
+        </div>
+    </div>
+</div>
 
-  <script>
-	  const trackList = ['LA Chill Tour', 'LA Fusion Jam', 'This is it band'];
-	  const playerBlock = document.getElementsByClassName('mediaplayer')[0];
-	  const player = playerBlock.getElementsByTagName('audio')[0];
-      const title = playerBlock.getElementsByClassName('title')[0];
-	  const playStateBtn = playerBlock.getElementsByClassName('playstate')[0];
-	  const stopBtn = playerBlock.getElementsByClassName('stop')[0];
-	  const nextBtn = playerBlock.getElementsByClassName('next')[0];
-	  const backBtn = playerBlock.getElementsByClassName('back')[0];
+<script>
+    const trackList = ['LA Chill Tour', 'LA Fusion Jam', 'This is it band'];
+    const playerBlock = document.getElementsByClassName('mediaplayer')[0];
+    const player = playerBlock.getElementsByTagName('audio')[0];
+    const title = playerBlock.getElementsByClassName('title')[0];
+    const playStateBtn = playerBlock.getElementsByClassName('playstate')[0];
+    const stopBtn = playerBlock.getElementsByClassName('stop')[0];
+    const nextBtn = playerBlock.getElementsByClassName('next')[0];
+    const backBtn = playerBlock.getElementsByClassName('back')[0];
 
-	  let currentTrackNum = 0;
-	  setTrackSrc(trackList[currentTrackNum]);
+    let currentTrackNum = 0;
+    setTrackSrc(trackList[currentTrackNum]);
 
-	  playStateBtn.addEventListener('click',togglePlay);
-	  stopBtn.addEventListener('click',stop);
-	  nextBtn.addEventListener('click',playNext);
-	  backBtn.addEventListener('click',playPrev);
+    playStateBtn.addEventListener('click', togglePlay);
+    stopBtn.addEventListener('click', stop);
+    nextBtn.addEventListener('click', playNext);
+    backBtn.addEventListener('click', playPrev);
 
-	  function togglePlay() {
-	      if(!playerBlock.classList.contains('play')) {
-	          play();
-		  } else {
-              pause();
-		  }
-	  }
+    function togglePlay() {
+        if (!playerBlock.classList.contains('play')) {
+            play();
+        } else {
+            pause();
+        }
+    }
 
-	  function play() {
-          playerBlock.classList.add('play');
-          player.play();
-	  }
+    function play() {
+        playerBlock.classList.add('play');
+        player.play();
+    }
 
-	  function pause() {
-          playerBlock.classList.remove('play');
-          player.pause();
-	  }
+    function pause() {
+        playerBlock.classList.remove('play');
+        player.pause();
+    }
 
-	  function stop() {
-	      pause();
-          player.currentTime = 0;
-	  }
+    function stop() {
+        pause();
+        player.currentTime = 0;
+    }
 
-	  function setTrackSrc(name) {
-	      player.src = `./mp3/${name}.mp3`;
-	  }
+    function setTrackSrc(name) {
+        player.src = `./mp3/${name}.mp3`;
+    }
 
-      function playNext() {
-          if(currentTrackNum + 1 !== trackList.length) {
-              currentTrackNum++;
-          } else {
-              currentTrackNum = 0;
-          }
-          changeTrack();
-      }
+    function playNext() {
+        if (currentTrackNum + 1 !== trackList.length) {
+            currentTrackNum++;
+        } else {
+            currentTrackNum = 0;
+        }
+        changeTrack();
+    }
 
-      function playPrev() {
-          if(currentTrackNum === 0) {
-              currentTrackNum = trackList.length - 1;
-          } else {
-              currentTrackNum--;
-          }
-          changeTrack();
-      }
+    function playPrev() {
+        if (currentTrackNum === 0) {
+            currentTrackNum = trackList.length - 1;
+        } else {
+            currentTrackNum--;
+        }
+        changeTrack();
+    }
 
-      function changeTrack() {
-	      pause();
-          setTrackSrc(trackList[currentTrackNum]);
-          title.title = trackList[currentTrackNum];
-	  }
-  </script>
+    function changeTrack() {
+        pause();
+        setTrackSrc(trackList[currentTrackNum]);
+        title.title = trackList[currentTrackNum];
+    }
+</script>
 </body>
 </html>
