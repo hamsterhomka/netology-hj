@@ -37,7 +37,10 @@
 
   <script>
 	  function playDrumSound(e) {
-	      e.target.getElementsByTagName('audio')[0].play();
+	      const currentAudio = e.target.getElementsByTagName('audio')[0];
+	      currentAudio.pause();
+	      currentAudio.currentTime = 0;
+	      currentAudio.play();
 	  }
 
 	  const drumKitButtons = document.getElementsByClassName('drum-kit__drum');

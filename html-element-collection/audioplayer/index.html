@@ -80,6 +80,10 @@
         player.currentTime = 0;
     }
 
+    function checkIfPaused() {
+        return !playerBlock.classList.contains('play');
+    }
+
     function setTrackSrc(name) {
         player.src = `./mp3/${name}.mp3`;
     }
@@ -103,9 +107,11 @@
     }
 
     function changeTrack() {
-        pause();
         setTrackSrc(trackList[currentTrackNum]);
         title.title = trackList[currentTrackNum];
+        if(!checkIfPaused()) {
+            play();
+        }
     }
 </script>
 </body>
