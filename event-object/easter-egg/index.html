@@ -45,5 +45,71 @@
       </svg>
     </div>
   </main>
+
+  <script>
+    const nav = document.getElementsByTagName('nav')[0];
+    const secret = document.getElementsByClassName('secret')[0];
+    document.addEventListener('keydown',toggleNav);
+    document.addEventListener('keydown',openSecret);
+
+    const secretCode = 'нетология';
+    let userCodeInput = '';
+
+    function toggleNav(e) {
+        if(!(e.ctrlKey && e.altKey)) {
+            return;
+        }
+        switch(e.code) {
+            case 'KeyT':
+                nav.classList.toggle('visible');
+            break;
+        }
+    }
+
+    function checkCode() {
+        if(userCodeInput === secretCode) {
+            secret.classList.add('visible');
+        } else {
+            userCodeInput = userCodeInput.slice(secretCode.length * -1);
+        }
+    }
+
+    function openSecret(e) {
+        switch(e.code) {
+            case 'KeyY':
+                userCodeInput += 'н';
+                checkCode();
+                break;
+            case 'KeyT':
+                userCodeInput += 'е';
+                checkCode();
+                break;
+            case 'KeyN':
+                userCodeInput += 'т';
+                checkCode();
+                break;
+            case 'KeyJ':
+                userCodeInput += 'о';
+                checkCode();
+                break;
+            case 'KeyK':
+                userCodeInput += 'л';
+                checkCode();
+                break;
+            case 'KeyU':
+                userCodeInput += 'г';
+                checkCode();
+                break;
+            case 'KeyB':
+                userCodeInput += 'и';
+                checkCode();
+                break;
+            case 'KeyZ':
+                userCodeInput += 'я';
+                checkCode();
+                break;
+        }
+    }
+  </script>
 </body>
 </html>
