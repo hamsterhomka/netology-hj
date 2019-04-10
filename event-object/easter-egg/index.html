@@ -52,63 +52,34 @@
     document.addEventListener('keydown',toggleNav);
     document.addEventListener('keydown',openSecret);
 
-    const secretCode = 'нетология';
-    let userCodeInput = '';
+    const secretCodeKeys = ['KeyY', 'KeyT', 'KeyN', 'KeyJ', 'KeyK', 'KeyJ', 'KeyU', 'KeyB', 'KeyZ'];
+    let userCodeInput = [];
 
     function toggleNav(e) {
-        if(!(e.ctrlKey && e.altKey)) {
+        if(!(e.ctrlKey && e.altKey && e.code === 'KeyT')) {
             return;
         }
-        switch(e.code) {
-            case 'KeyT':
-                nav.classList.toggle('visible');
-            break;
-        }
+
+        nav.classList.toggle('visible');
     }
 
     function checkCode() {
-        if(userCodeInput === secretCode) {
-            secret.classList.add('visible');
-        } else {
-            userCodeInput = userCodeInput.slice(secretCode.length * -1);
+        if(userCodeInput.length >= secretCodeKeys.length) {
+            userCodeInput = userCodeInput.slice(secretCodeKeys.length * -1);
+
+            let inputCodeIsValid = userCodeInput.every((code, i) => {
+                return code === secretCodeKeys[i];
+            });
+
+            if(inputCodeIsValid) {
+                secret.classList.add('visible');
+            }
         }
     }
 
     function openSecret(e) {
-        switch(e.code) {
-            case 'KeyY':
-                userCodeInput += 'н';
-                checkCode();
-                break;
-            case 'KeyT':
-                userCodeInput += 'е';
-                checkCode();
-                break;
-            case 'KeyN':
-                userCodeInput += 'т';
-                checkCode();
-                break;
-            case 'KeyJ':
-                userCodeInput += 'о';
-                checkCode();
-                break;
-            case 'KeyK':
-                userCodeInput += 'л';
-                checkCode();
-                break;
-            case 'KeyU':
-                userCodeInput += 'г';
-                checkCode();
-                break;
-            case 'KeyB':
-                userCodeInput += 'и';
-                checkCode();
-                break;
-            case 'KeyZ':
-                userCodeInput += 'я';
-                checkCode();
-                break;
-        }
+        userCodeInput.push(e.code);
+        checkCode();
     }
   </script>
 </body>
