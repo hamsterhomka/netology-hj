@@ -5,12 +5,7 @@ const activeTab = document.querySelector('.tabs a.active');
 const content = document.getElementById('content');
 const preloader = document.getElementById('preloader');
 
-function openTab(e,tab) {
-    if(!tab) {
-        e.preventDefault();
-        tab = e.currentTarget;
-    }
-
+function openTab(tab) {
     const link = tab.href;
 
     tabs.forEach(tab => {
@@ -26,6 +21,13 @@ function openTab(e,tab) {
     xhr.open('GET', link, true);
     xhr.send();
 }
+
+function onTabClick(e) {
+    e.preventDefault();
+    const tab = e.currentTarget;
+    openTab(tab);
+}
+
 function onXhrError(e) {
     console.log('error');
 }
@@ -47,10 +49,10 @@ function onXhrLoad(e) {
 }
 
 function init() {
-    openTab(null,activeTab);
+    openTab(activeTab);
 
     tabs.forEach(tab => {
-        tab.addEventListener('click',openTab);
+        tab.addEventListener('click',onTabClick);
     })
 }
 
