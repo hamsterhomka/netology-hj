@@ -52,6 +52,7 @@ function onZipKeydown(e) {
     const notProhibitedKeys = ['0','1','2','3','4','5','6','7','8','9','ArrowLeft','ArrowRight','ArrowUp','ArrowDown',
         'Backspace','F5','Delete', 'Tab'];
 
+
     if(!notProhibitedKeys.includes(e.key) && !e.ctrlKey) {
         e.preventDefault();
     }
