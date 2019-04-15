@@ -1,34 +1,22 @@
-const undone = document.querySelector('.undone');
-const done = document.querySelector('.done');
+const todoList = document.querySelector('.todo-list');
+const checks = Array.from(todoList.getElementsByTagName('input'));
+const undone = todoList.querySelector('.undone');
+const done = todoList.querySelector('.done');
 
-const undoneItems = Array.from(undone.querySelectorAll('label'));
-const doneItems = Array.from(done.querySelectorAll('label'));
-
-function onUndoneItemChange(event) {
+function onItemChange(event) {
     const input = event.currentTarget;
     const label = input.parentElement;
 
-    input.removeEventListener('change',onUndoneItemChange);
-    input.addEventListener('change',ondoneItemChange);
-    done.appendChild(label);
-}
-
-function ondoneItemChange(event) {
-    const input = event.currentTarget;
-    const label = input.parentElement;
-
-    input.removeEventListener('change',ondoneItemChange);
-    input.addEventListener('change',onUndoneItemChange);
-    undone.appendChild(label);
+    if(input.checked === true) {
+        done.appendChild(label);
+    } else {
+        undone.appendChild(label);
+    }
 }
 
 function init() {
-    undoneItems.forEach(item => {
-        item.querySelector('input[type="checkbox"]').addEventListener('change',onUndoneItemChange);
-    });
-
-    doneItems.forEach(item => {
-        item.querySelector('input[type="checkbox"]').addEventListener('change',ondoneItemChange);
+    checks.forEach(check => {
+        check.addEventListener('change',onItemChange)
     })
 }
 
