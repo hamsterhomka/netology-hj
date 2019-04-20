@@ -44,66 +44,55 @@ function getCurrentProductInStorage() {
 
 function addColorSwatch() {
   const colorSwatchUrl = 'https://neto-api.herokuapp.com/cart/colors';
-  const xhr = new XMLHttpRequest();
-  xhr.addEventListener('load',onColorsLoad);
-  xhr.open('GET',colorSwatchUrl);
-  xhr.send();
-}
+  fetch(colorSwatchUrl)
+    .then(res => {
+      return res.json();
+    })
+    .then(colors => {
+      colors.forEach(color => {
+        colorSwatch.innerHTML += getColorItem(color);
+      });
 
-function onColorsLoad(event) {
-  const xhr = event.currentTarget;
-  const colors = JSON.parse(xhr.responseText);
-
-  colors.forEach(color => {
-    colorSwatch.innerHTML += getColorItem(color);
-  });
-
-  const colorInputs = Array.from(form.querySelectorAll('input[name="color"]'));
-  colorInputs.forEach(size => {
-    size.addEventListener('change',onFormStateChange);
-  })
+      const colorInputs = Array.from(form.querySelectorAll('input[name="color"]'));
+      colorInputs.forEach(size => {
+        size.addEventListener('change',onFormStateChange);
+      })
+    })
 }
 
 function addSizes() {
   const sizesUrl = 'https://neto-api.herokuapp.com/cart/sizes';
-  const xhr = new XMLHttpRequest();
-  xhr.addEventListener('load',onSizesLoad);
-  xhr.open('GET',sizesUrl);
-  xhr.send();
-}
 
-function onSizesLoad(event) {
-  const xhr = event.currentTarget;
-  const sizes = JSON.parse(xhr.responseText);
+  fetch(sizesUrl)
+    .then(res => { return res.json(); })
+    .then(sizes => {
+      sizes.forEach(size => {
+        sizeSwatch.innerHTML += getSizeItem(size);
+      });
 
-  sizes.forEach(size => {
-    sizeSwatch.innerHTML += getSizeItem(size);
-  });
-
-  const sizeInputs = Array.from(form.querySelectorAll('input[name="size"]'));
-  sizeInputs.forEach(size => {
-    size.addEventListener('change',onFormStateChange);
-  })
+      const sizeInputs = Array.from(form.querySelectorAll('input[name="size"]'));
+      sizeInputs.forEach(size => {
+        size.addEventListener('change',onFormStateChange);
+      })
+    });
 }
 
 function onAddToCartClick(event) {
   event.preventDefault();
   const cartUrl = 'https://neto-api.herokuapp.com/cart';
   const formData = new FormData(form);
-  formData.append('productId',productId);
+  formData.append('productId', productId);
 
-  const xhr = new XMLHttpRequest();
-  xhr.addEventListener('load',onCartLoad);
-  xhr.open('POST',cartUrl);
-  xhr.send(formData);
-}
-
-function onCartLoad(event) {
-  const xhr = event.currentTarget;
-  const response = JSON.parse(xhr.responseText);
-  updateCartState(response);
-
-  console.log(response);
+  fetch(cartUrl, {
+    body: formData,
+    method: 'POST'
+  })
+    .then(res => {
+      return res.json()
+    })
+    .then(data => {
+      updateCartState(data);
+    });
 }
 
 function updateCartState(products) {
@@ -123,24 +112,24 @@ function updateCartState(products) {
 
 function onProductRemoveButtonClick(event) {
   const target = event.target;
-  if(!target.classList.contains('remove')) {
+  if (!target.classList.contains('remove')) {
     return;
   }
 
   const removeProductUrl = 'https://neto-api.herokuapp.com/cart/remove';
   const formData = new FormData();
-  formData.append('productId',target.dataset.id);
+  formData.append('productId', target.dataset.id);
 
-  const xhr = new XMLHttpRequest();
-  xhr.addEventListener('load',onProductRemoveLoad);
-  xhr.open('POST',removeProductUrl);
-  xhr.send(formData);
-}
-
-function onProductRemoveLoad(event) {
-  const xhr = event.currentTarget;
-  const response = JSON.parse(xhr.responseText);
-  updateCartState(response);
+  fetch(removeProductUrl, {
+    body: formData,
+    method: 'POST'
+  })
+    .then(res => {
+    return res.json();
+  })
+    .then(data => {
+      updateCartState(data);
+    });
 }
 
 function onFormStateChange(event) {

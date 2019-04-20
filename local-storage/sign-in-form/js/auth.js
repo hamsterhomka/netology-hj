@@ -8,43 +8,55 @@ const signUpOutput = signUpForm.querySelector('.error-message');
 function onSignInSubmit(event) {
   event.preventDefault();
   const signInUrl = 'https://neto-api.herokuapp.com/signin';
-  const xhr = new XMLHttpRequest();
   const formData = new FormData(signInForm);
 
-  xhr.addEventListener('load',onSignInXhrLoad);
-  xhr.open('POST',signInUrl);
-  xhr.send(formData);
-}
-
-function onSignInXhrLoad(event) {
-  const xhr = event.currentTarget;
-  const response = JSON.parse(xhr.responseText);
-  if(response.error) {
-    signInOutput.textContent = response.message;
-  } else {
-    signInOutput.textContent = `Пользователь ${response.name} успешно авторизован`;
-  }
+  fetch(signInUrl,{
+    method: 'POST',
+    body: formData
+  })
+    .then((res) => {
+      if (200 <= res.status && res.status < 300) {
+        return res;
+      }
+      throw new Error(res.statusText);
+    })
+    .then(res => {
+      return res.json();
+    })
+    .then(data => {
+      if(data.error) {
+        signInOutput.textContent = data.message;
+      } else {
+        signInOutput.textContent = `Пользователь ${data.name} успешно авторизован`;
+      }
+    })
 }
 
 function onSignUpSubmit(event) {
   event.preventDefault();
   const signUpUrl = 'https://neto-api.herokuapp.com/signup';
-  const xhr = new XMLHttpRequest();
   const formData = new FormData(signUpForm);
 
-  xhr.addEventListener('load',onSignUpXhrLoad);
-  xhr.open('POST',signUpUrl);
-  xhr.send(formData);
-}
-
-function onSignUpXhrLoad(event) {
-  const xhr = event.currentTarget;
-  const response = JSON.parse(xhr.responseText);
-  if(response.error) {
-    signUpOutput.textContent = response.message;
-  } else {
-    signInOutput.textContent = `Пользователь ${response.name} успешно зарегистрирован`;
-  }
+  fetch(signUpUrl,{
+    method: 'POST',
+    body: formData
+  })
+    .then((res) => {
+      if (200 <= res.status && res.status < 300) {
+        return res;
+      }
+      throw new Error(res.statusText);
+    })
+    .then(res => {
+      return res.json();
+    })
+    .then(data => {
+      if(data.error) {
+        signUpOutput.textContent = data.message;
+      } else {
+        signUpOutput.textContent = `Пользователь ${data.name} успешно зарегистрирован`;
+      }
+    })
 }
 
 function initAuth() {
