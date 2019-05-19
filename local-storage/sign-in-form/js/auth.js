@@ -1,19 +1,19 @@
 'use strict';
 
-const signInForm = document.querySelector('.sign-in-htm');
-const signUpForm = document.querySelector('.sign-up-htm');
-const signInOutput = signInForm.querySelector('.error-message');
-const signUpOutput = signUpForm.querySelector('.error-message');
+const signInForm = document.querySelector('.sign-in-htm'),
+  signUpForm = document.querySelector('.sign-up-htm'),
+  signInOutput = signInForm.querySelector('.error-message'),
+  signUpOutput = signUpForm.querySelector('.error-message');
 
 function onSignInSubmit(event) {
   event.preventDefault();
   const signInUrl = 'https://neto-api.herokuapp.com/signin';
   const formData = new FormData(signInForm);
   let user = {};
-  formData.forEach((value,key) => user[key] = value);
+  formData.forEach((value, key) => user[key] = value);
   user = JSON.stringify(user);
 
-  fetch(signInUrl,{
+  fetch(signInUrl, {
     method: 'POST',
     body: user,
     headers: {
@@ -30,7 +30,7 @@ function onSignInSubmit(event) {
       return res.json();
     })
     .then(data => {
-      if(data.error) {
+      if (data.error) {
         signInOutput.textContent = data.message;
       } else {
         signInOutput.textContent = `Пользователь ${data.name} успешно авторизован`;
@@ -43,10 +43,10 @@ function onSignUpSubmit(event) {
   const signUpUrl = 'https://neto-api.herokuapp.com/signup';
   const formData = new FormData(signUpForm);
   let user = {};
-  formData.forEach((value,key) => user[key] = value);
+  formData.forEach((value, key) => user[key] = value);
   user = JSON.stringify(user);
 
-  fetch(signUpUrl,{
+  fetch(signUpUrl, {
     method: 'POST',
     body: user,
     headers: {
@@ -63,7 +63,7 @@ function onSignUpSubmit(event) {
       return res.json();
     })
     .then(data => {
-      if(data.error) {
+      if (data.error) {
         signUpOutput.textContent = data.message;
       } else {
         signUpOutput.textContent = `Пользователь ${data.name} успешно зарегистрирован`;
@@ -72,8 +72,8 @@ function onSignUpSubmit(event) {
 }
 
 function initAuth() {
-  signInForm.addEventListener('submit',onSignInSubmit);
-  signUpForm.addEventListener('submit',onSignUpSubmit);
+  signInForm.addEventListener('submit', onSignInSubmit);
+  signUpForm.addEventListener('submit', onSignUpSubmit);
 }
 
-document.addEventListener('DOMContentLoaded',initAuth);
+document.addEventListener('DOMContentLoaded', initAuth);
