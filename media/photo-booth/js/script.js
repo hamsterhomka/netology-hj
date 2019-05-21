@@ -65,10 +65,12 @@ function onFileUploadClick(event) {
       let imgSrc;
       while(listItemTarget !== list) {
         if(listItemTarget.tagName.toLowerCase() === 'figure') {
-          imgSrc = listItemTarget.querySelector('img');
+          imgSrc = listItemTarget.querySelector('img').src;
         }
         listItemTarget = listItemTarget.parentNode;
       }
+
+      console.log(imgSrc);
 
       fetch(imgSrc)
         .then(res => res.blob())
@@ -78,11 +80,11 @@ function onFileUploadClick(event) {
 
           fetch('https://neto-api.herokuapp.com/photo-booth',{
             method: 'POST',
-            headers: {'Content-Type':'multipart/form-data'},
             body: formData
           })
-          //.then(response => response.json())
-            .then(data => console.log(data));
+            .then(response => response.json())
+            .then(data => console.log(data))
+            .catch((err) => console.log(err));
         });
     }
 
