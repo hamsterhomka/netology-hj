@@ -16,18 +16,12 @@ function getEyePos() {
   ]
 }
 
-function getDistance(cursorX,cursorY) {
-  const [pupilX, pupilY] = getEyePos();
-
-  return Math.sqrt(Math.pow(cursorX - pupilX, 2) + Math.pow(cursorY - pupilY, 2));
-}
-
 function setAnimationProperties(progressX, progressY) {
   const maxProgress = Math.max(Math.abs(progressX), Math.abs(progressY));
 
   pupil.style.setProperty(
     '--pupil-size',
-    MIN_SIZE_VALUE + (MAX_SIZE_VALUE - MIN_SIZE_VALUE) * maxProgress
+    MAX_SIZE_VALUE - (MAX_SIZE_VALUE - MIN_SIZE_VALUE) * maxProgress
   );
   pupil.style.setProperty('--pupil-x', OFFSET_MAX_VALUE * progressX + 'px');
   pupil.style.setProperty('--pupil-y', OFFSET_MAX_VALUE * progressY + 'px');
