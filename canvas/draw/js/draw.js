@@ -10,11 +10,15 @@ let curves = [],
   lineWidth = 100,
   lineWidthInc = false;
 
+function clearCanvas() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  curves = [];
+}
+
 function resizeCanvas() {
   canvas.height = window.innerHeight;
   canvas.width = window.innerWidth;
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  curves = [];
+  clearCanvas();
 }
 
 function circle(point) {
@@ -133,6 +137,10 @@ function init() {
       setHue(shiftKey);
       setLineWidth();
     }
+  });
+
+  canvas.addEventListener('dblclick',() => {
+    clearCanvas();
   });
 
   tick();
