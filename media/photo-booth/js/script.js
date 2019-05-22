@@ -3,11 +3,22 @@
 const app = document.querySelector('.app'),
   controls = document.querySelector('.controls'),
   takePhoto = document.querySelector('#take-photo'),
-  list = document.querySelector('.list');
+  list = document.querySelector('.list'),
+  errors = document.querySelector('#error-message');
 
-let video;
+let video,
+  audio;
+
+function initAudio() {
+  audio = document.createElement('audio');
+  audio.src = './audio/click.mp3';
+  controls.appendChild(audio);
+}
 
 function onTakePhotoClick(event) {
+  audio.currentTime = 0;
+  audio.play();
+
   const canvas = document.createElement('canvas'),
     ctx = canvas.getContext('2d');
   canvas.classList.add('photo-box');
@@ -20,7 +31,7 @@ function onTakePhotoClick(event) {
 
 function initVideo() {
   if(!navigator.mediaDevices) {
-    console.log('Взаимодействие с камерой в вашем браузере не поддерживается');
+    errors.innerHTML += 'Взаимодействие с камерой в вашем браузере не поддерживается';
     return;
   }
 
@@ -70,8 +81,6 @@ function onFileUploadClick(event) {
         listItemTarget = listItemTarget.parentNode;
       }
 
-      console.log(imgSrc);
-
       fetch(imgSrc)
         .then(res => res.blob())
         .then(blob => {
@@ -82,9 +91,9 @@ function onFileUploadClick(event) {
             method: 'POST',
             body: formData
           })
-            .then(response => response.json())
-            .then(data => console.log(data))
-            .catch((err) => console.log(err));
+            .then(response => response.text())
+            //.then(data => console.log(data))
+            .catch((err) => errors.innerHTML += err.message);
         });
     }
 
@@ -94,6 +103,7 @@ function onFileUploadClick(event) {
 
 function init() {
   initVideo();
+  initAudio();
   takePhoto.addEventListener('click', onTakePhotoClick);
   list.addEventListener('click',onFileRemoveClick);
   list.addEventListener('click',onFileUploadClick);
