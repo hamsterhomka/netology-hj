@@ -48,9 +48,9 @@ function throttle(callback) {
     if(!isWaiting) {
       callback.apply(this,arguments);
       isWaiting = true;
-      requestAnimationFrame(() => {
+      setTimeout(() => {
         isWaiting = false;
-      })
+      }, 1000 / 10)
     }
   }
 }

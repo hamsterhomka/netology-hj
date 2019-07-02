@@ -85,6 +85,7 @@ function onBtnSeatMapClick(event) {
   const planeId = acSelect.value;
   fetch(`https://neto-api.herokuapp.com/plane/${planeId}`)
     .then(res => res.json())
+    .then(console.log)
     .then(showScheme);
 }
 

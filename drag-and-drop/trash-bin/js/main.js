@@ -24,8 +24,6 @@ function init() {
     if(movedLogo) {
       const dragEndElement = document.elementFromPoint(event.clientX,event.clientY);
 
-      console.log(dragEndElement);
-
       if(dragEndElement === trashBin) {
         movedLogo.classList.remove('moving');
         movedLogo.style.display = 'none';
